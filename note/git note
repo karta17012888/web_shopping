@@ -9,12 +9,12 @@ git remote set-url origin https://github.com/USERNAME/OTHERREPOSITORY.git   將�
 
 git clone https://github.com/karta17012888/web_shopping.git  下載雲端的檔案
 
-git add .    // 暫存所有檔案
+git add *    // 暫存所有檔案
 
 git commit -m "abcd..."    // 上傳檔案    -m"abcd" 註解
 
 git push -u origin master   上傳檔案 至雲端
-
+git push -f                 強制上傳
 
 git remote -v    // 確認 上傳網址
 
