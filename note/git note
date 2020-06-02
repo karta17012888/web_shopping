@@ -1,0 +1,38 @@
+.gitignore檔案  不想要被注意的檔案
+
+
+git init     // 建立 git 資料庫
+
+git remote add origin https://jame8548@bitbucket.org/jame8548/test_5.git    為初次建立 上傳網址時 設定的
+
+git remote set-url origin https://github.com/USERNAME/OTHERREPOSITORY.git   將你的上傳網址改為.....
+
+git clone https://github.com/karta17012888/web_shopping.git  下載雲端的檔案
+
+git add .    // 暫存所有檔案
+
+git commit -m "abcd..."    // 上傳檔案    -m"abcd" 註解
+
+git push -u origin master   上傳檔案 至雲端
+
+
+git remote -v    // 確認 上傳網址
+
+
+點擊 git網址上的 clone 按鈕 可得到下載檔案的連結   <==>   git clone https://jame8548@bitbucket.org/jame8548/test_5.git
+
+
+
+                                                        ---> git clone ???  (下載檔案)
+初次設定 : git init -->  git remote add origin  ???  ---|  
+                                                        --->  上傳 請見下方
+
+
+
+上傳流程 :   `git add .` -->    `git commit -m "....."`   -->    `git push -u origin master`
+
+
+
+
+
+
