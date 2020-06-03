@@ -9,20 +9,22 @@ git remote set-url origin https://github.com/USERNAME/OTHERREPOSITORY.git   將�
 
 git clone https://github.com/karta17012888/web_shopping.git  下載雲端的檔案
 
-git add *    // 暫存所有檔案
+git add *       // 追蹤所有檔案
+it add <file>   // 追蹤 某個 檔案
 
-git commit -m "abcd..."    // 上傳檔案    -m"abcd" 註解
+git rm <file>   // 刪除 某個 檔案
 
-git push -u origin master   上傳檔案 至雲端
-git push -f                 強制上傳
+git commit -m "abcd..."     // 儲存所有更動到 git 內,   'abcd...' == 註解
+
+git push -u origin master   // 上傳檔案 至雲端
+git push -f                 // 強制上傳
 
 git remote -v    // 確認 上傳網址
 
+git status       // 確認 git 狀態  
 
-點擊 git網址上的 clone 按鈕 可得到下載檔案的連結   <==>   git clone https://jame8548@bitbucket.org/jame8548/test_5.git
-
-
-
+git log          // 確認 git 儲存紀錄  
+              
                                                         ---> git clone ???  (下載檔案)
 初次設定 : git init -->  git remote add origin  ???  ---|  
                                                         --->  上傳 請見下方
@@ -34,5 +36,6 @@ git remote -v    // 確認 上傳網址
 
 
 
+點擊 git網址上的 clone 按鈕 可得到下載檔案的連結   <==>   git clone https://jame8548@bitbucket.org/jame8548/test_5.git
 
 
