@@ -3,9 +3,9 @@
 
 git init     // 建立 git 資料庫
 
-git remote add origin https://jame8548@bitbucket.org/jame8548/test_5.git    為初次建立 上傳網址時 設定的
+git remote add origin https://jame8548@bitbucket.org/jame8548/test_5.git    為初次建立專案設定 git上傳網址
 
-git remote set-url origin https://github.com/USERNAME/OTHERREPOSITORY.git   將你的上傳網址改為.....
+git remote set-url origin https://github.com/USERNAME/OTHERREPOSITORY.git   將專案設定 的git上傳網址改為.....
 
 git clone https://github.com/karta17012888/web_shopping.git  下載雲端的檔案
 
@@ -41,7 +41,7 @@ git checkout testing    // 移動到 testing 分支上
 
 
 
-上傳流程 :   `git add .` -->    `git commit -m "....."`   -->    `git push -u origin master`
+上傳流程 :   `git add *` -->    `git commit -m "....."`   -->    `git push -u origin master`
 
 
 
