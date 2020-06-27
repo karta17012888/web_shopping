@@ -3,7 +3,8 @@
     <div style=" padding:20px; " >
 
         <div>  <label>註冊</label>  </div>
-
+        
+        <br>
 
         <div>
             <label>姓名:</label>
@@ -11,15 +12,21 @@
             <input type="text" v-model="register_1" >
         </div>
 
+        <br>
+
         <div>
             <label>信箱:</label>
             <input type="text" v-model="register_2" >
         </div>
         
+        <br>
+
         <div>
             <label>密碼:</label>
             <input type="text" v-model="register_3" >
         </div>
+
+        <br>
 
         <input type="button" value="註冊" v-on:click="bt_register()">
 

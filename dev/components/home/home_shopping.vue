@@ -6,8 +6,9 @@
 
             <button id="button_size" v-on:click="change_page( 'shopping' )" >訂購</button>
             <button id="button_size" v-on:click="change_page( 'cart' )" >購物車</button>
-            <button id="button_size" v-on:click="change_page( '???' )" >已結清</button>
+            <button id="button_size" v-on:click="change_page( 'over' )" >已結清</button>
             <button id="button_size" v-on:click="change_page( 'member' )" >會員中心</button>
+            <button id="button_size" v-on:click="change_page( 'logout' )" >登出</button>
 
         </div>
         
@@ -171,7 +172,6 @@
                             case "get_product_meun":  that.product_menu(); break;
                             case "send_order": that.send_buy() ; break;
                             case "change_page": that.$router.push({  name: `${path}`  }); break;
-
                         }
                     
                     }
@@ -296,7 +296,7 @@
            
 
             recovery_main_page(){  // 送出訂單後 重整頁面
-                console.log( "4444" )
+
                 this.see_status = 'no_ready'  
                 this.product_menu()
             },
@@ -306,6 +306,17 @@
 
                 if( path == "shopping" ){  this.recovery_main_page()  }
                 
+                else if( path == "logout" ){ 
+
+                    localStorage.clear()
+                    sessionStorage.clear()
+                    this.vuex_set_id( '' )
+                    this.vuex_set_name( '' )
+                    this.vuex_set_email( '' )
+                    this.vuex_set_token( '' )
+                    this.$router.push( { name: "login" })
+                }
+
                 else{  this.test_token( "change_page", path )  }
             },
 
@@ -333,7 +344,7 @@
     #home_box{  width: 98vw; height: 100vh; padding: 10px 0px 0px 20px;  } 
 
 
-    #product_table { 
+    #product_table{ 
         
         border: 1px solid #000; 
         font-family: 微軟正黑體; 

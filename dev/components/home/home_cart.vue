@@ -7,9 +7,9 @@
 
             <button id="button_size" v-on:click="change_page( 'shopping' )" >訂購</button>
             <button id="button_size" v-on:click="change_page( 'cart' )" >購物車</button>
-            <button id="button_size" v-on:click="change_page( '???' )" >已結清</button>
+            <button id="button_size" v-on:click="change_page( 'over' )" >已結清</button>
             <button id="button_size" v-on:click="change_page( 'member' )" >會員中心</button>
-
+            <button id="button_size" v-on:click="change_page( 'logout' )" >登出</button>
         </div>
 
 
@@ -483,8 +483,21 @@
 
                 if( path == "cart" ){  this.recovery_main_page()  }
                 
+                else if( path == "logout" ){ 
+
+                    localStorage.clear()
+                    sessionStorage.clear()
+                    this.vuex_set_id( '' )
+                    this.vuex_set_name( '' )
+                    this.vuex_set_email( '' )
+                    this.vuex_set_token( '' )
+                    this.$router.push( { name: "login" })
+                }
+
                 else{  this.test_token( "change_page", path )  }
             },
+
+
 
             pay_for_order( index ){
                 var that = this
@@ -502,12 +515,9 @@
                     } )
                         
                     .then( function ( res ) { alert( res.data.status ) })  
-                        
-                    
                 }
-
-
             },
+
 
 
 

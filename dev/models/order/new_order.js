@@ -34,7 +34,6 @@ module.exports = class order_models {
                     resolve( order_data )
                 }
             
-
                 check_quantity_for(  order_data.order_list  )
             })
     
@@ -46,7 +45,6 @@ module.exports = class order_models {
 
                     .then( function( order_data ){  
                         
-
                         const get_price_for = async function ( order ){  
 
                             for( let i=0 ; i < order.order_list.length ; i++ ){

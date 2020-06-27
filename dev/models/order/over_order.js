@@ -1,30 +1,30 @@
+const get_member_order_over_list = require('./member_order_/get_member_order_over_list');
 const get_product_name = require('../product/get_product_/get_product_name');
-const get_member_order_list = require('./member_order_/get_member_order_list');
+
 
 module.exports = class order_models {
 
-    get_member_order_list( req, res, next ){
-        
+    over_order( req, res, next ){
+
         req.on( 'data', function( data ){
             
-            const obj = JSON.parse( data );  //console.log( obj );
-            
-            
-            const order_list = new Promise( function( resolve, reject ){ 
+            const obj = JSON.parse( data ); 
+
+            const order_over_list = new Promise( function( resolve, reject ){ 
                 
-                get_member_order_list( obj.id )
+                get_member_order_over_list( obj.id )
                     
                     .then( function( result ){  resolve( result )  })
                     
                     .catch( function( err ){  reject( err )  })
             });
 
+            
 
-            const product_name = order_list          
+            const product_name = order_over_list          
     
                 .then( function( order ){  
                     
-
                     const get_product_name_for =  async function( id, order ){
 
                         var product_box = {}
@@ -43,6 +43,7 @@ module.exports = class order_models {
                             order[j][ "product_name" ] = product_box[ order[j]["product_id"] ]
                         }
 
+                        
                         res.send( order )
                     }
 
@@ -63,6 +64,7 @@ module.exports = class order_models {
                 })
                 
                 .catch( function( err ){  res.send( err )  }) 
+
 
         })
     }

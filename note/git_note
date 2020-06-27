@@ -5,7 +5,12 @@ git init     // 建立 git 資料庫
 
 git remote add origin https://jame8548@bitbucket.org/jame8548/test_5.git    為初次建立專案設定 git上傳網址
 
-git remote set-url origin https://github.com/USERNAME/OTHERREPOSITORY.git   將專案設定 的git上傳網址改為.....
+git remote set-url origin https://github.com/karta17012888/web_shopping.git   將專案設定 的git上傳網址改為.....
+
+// 設定後 origin 就等於 我們的遠端伺服器 代名詞
+
+
+
 
 git clone https://github.com/karta17012888/web_shopping.git  下載雲端的檔案
 
@@ -21,7 +26,9 @@ git commit -a "abcd..."     // 等於直 add * 後 再 commit -m , 較方便
 
 git mv hello.html world.html    // 修改 hello.html 檔名 變成 world.html
 
-git push -u origin master   // 上傳檔案 至雲端
+git push -u origin master   // 上傳 本地的 master分支的檔案 至 origin 遠端伺服器
+
+
 git push -f                 // 強制上傳
 
 git remote -v       // 確認 上傳網址
@@ -43,9 +50,5 @@ git checkout testing    // 移動到 testing 分支上
 
 上傳流程 :   `git add *` -->    `git commit -m "....."`   -->    `git push -u origin master`
 
-
-
-
-點擊 git網址上的 clone 按鈕 可得到下載檔案的連結   <==>   git clone https://jame8548@bitbucket.org/jame8548/test_5.git
 
 

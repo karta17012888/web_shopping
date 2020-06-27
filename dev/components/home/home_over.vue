@@ -10,69 +10,55 @@
             <button id="button_size" v-on:click="change_page( 'over' )" >已結清</button>
             <button id="button_size" v-on:click="change_page( 'member' )" >會員中心</button>
             <button id="button_size" v-on:click="change_page( 'logout' )" >登出</button>
+        </div>
 
+        
+        
+        <div v-if=" this.see_status == 'no_ready' "  style=" width: 100%; height: 90%; " >
+
+            <p>  請稍候  </p>
+            
         </div>
 
 
-        <div style="width: 100%; height: 90%;" >
 
-            <hr color=black SIZE=3 >
 
-            <div style=" margin: 15px 0px; " >
+        <div v-else-if=" this.see_status == 'ready' "  style=" width: 100%; height: 90%; " >
 
-                <p>  更改資料 </p>
+            <p>已結清訂單</p>
+                    
+            <table id="product_table"  >
+
+                <tr>        
+ 
+                    <th width="25%" class="p311_th" > 結清日期 </th>
+                    <th width="25%" class="p311_th" > 產品名稱 </th>
+                    <th width="25%" class="p311_th" > 價格 </th>
+                    <th width="25%" class="p311_th" > 數量 </th>
+
+                </tr>
+                
+                
+                <tr v-for="( item,index ) in member_order_over_box" :key="index" >           <!--  index = 0~21 直排 -->
+                    
+                    <td v-for=" i in member_order_over_param " :key="i" >                     <!--  i = 0~5 橫排 -->
+
+                        <br>
+                        {{ item[i] }}
+                        <hr color=black SIZE=3 >
                         
-                <div style=" margin: 20px 0px; " >
-                        
-                    <div>
-                        <div style='white-space:pre; width:90px; display: inline-block; ' >  用戶名  : </div>  
-                        <input type="text" v-model="edit_1" >
-                    </div>
-                            
-
-                    <div>
-                        <div style='white-space:pre; width:90px; display: inline-block; ' >  密碼      : </div>
-                        <input type="text" v-model="edit_2" >
-                    </div>
+                    </td>
+                </tr> 
                 
-                </div>
-
-                <input type="button" value="送出更改" v-on:click=" test_token( 'save_edit' ) ">
-
-            </div>
-                
-
-            <hr color=black SIZE=3 >
-                
-            <div style=" margin: 15px 0px; " >
-
-                <p>基本資料</p>
-
-                <div style="  margin:25px 0px;" >
-
-                    <label style='white-space:pre;' >用戶名 : </label> 
-
-                    <label style='white-space:pre;' > {{ user_name }} </label> 
-                </div>
-
-
-                <div style="  margin:25px 0px; " >
-
-                    <label style='white-space:pre;' >token : </label>
-
-                    <p style=" word-break: break-all; margin:10px 0px;  " >  {{ user_token }} </p>
-                </div>
-
-            </div>
-
-            <hr color=black SIZE=3 >
+            </table>
 
         </div>
-
-
     
     </div>
     
+
+
+
 
 </template>
 
@@ -91,7 +77,8 @@
         data(){  
             return {  
                 
-                edit_1:"", edit_2:"",
+                see_status: 'no_ready',
+                member_order_over_box:[], member_order_over_param:[ 1,2,3,4 ]
             }  
         },
         
@@ -112,9 +99,7 @@
             ...mapActions( {  vuex_set_token: 'set_token'  } ),
 
 
-
-
-            check_vuex_token(){   // 載入網頁後 先確認 token vuex
+            check_vuex_token(){   // 載入網頁後 先確認確認 token vuex
 
                 if(  !this.user_id &&  !this.user_name  &&  !this.user_email  &&  !this.user_token  ){
 
@@ -127,26 +112,31 @@
                         axios( {  method: 'post',  url: '/member/token',  data:{ token: localStorage['token']  }   } )
                         
                         .then( function ( result ) { 
-
+                            
                             if( result.data.err ){  localStorage.clear(), that.$router.push({ name: "login" })  }
                             
                             else{  
-
+                                
                                 axios( {  method: 'post',  url: '/member/login/new_page',  data:{ id: result.data.id  }   } )
                                 
                                 .then( function( result ){  
-                                    
+
                                     that.vuex_set_id(  result.data[0].id  )
                                     that.vuex_set_name(  result.data[0].name  )
                                     that.vuex_set_email(  result.data[0].email  )
                                     that.vuex_set_token(  localStorage['token']  )
+
+                                    that.member_order_over()
                                 }) 
                             }
                         })
                     }
                 }
                 
+                else{  this.test_token( "get_member_order_over" )  }
             },
+
+
 
 
 
@@ -157,14 +147,14 @@
                 
                 .then( function ( result ) { 
                     
-                    if( result.data.err ){  that.$router.push({ name: "login" })  }
+                    if( result.data.err ){  console.log( result.data.err ), that.$router.push({ name: "login" })  }
                     
                     else{ 
                 
                         switch( type ){
-                            
-                            case "save_edit":  that.member_edit();  break;
-                            case "change_page": that.$router.push({  name: `${path}`  });  break;
+
+                            case "get_member_order_over":  that.member_order_over(); break;
+                            case "change_page": that.$router.push({  name: `${path}`  }); break;
                         }
                     
                     }
@@ -172,31 +162,48 @@
             },
 
 
-            member_edit(){      // 更改會員資料
+            member_order_over(){    //  獲取 所有已結清的訂單
 
-                var that = this;
-
-                axios( {  
-                    method: 'post',  url: '/member/edit',  
-                    data:{ name: that.edit_1, password: that.edit_2, member_id: that.user_id  }
-                } )
-                
-                .then( function ( res ) {  
-                    
-                    alert( "編輯成功" ), console.log( res.data )  
-                    that.vuex_set_name( that.edit_1 )
-                } )  
-                .catch( function ( error ) {  alert( "編輯錯誤" ),  console.log( error )  } ) 
-            },
+                var that = this;        
  
+                axios( {  method: 'post',  url: '/order/over',  data:{  id: that.user_id  }  } )
+                
+                .then( function ( res ) {  that.make_member_order_over_list( res.data )   }) 
+                
+            },
+
+
+
+            make_member_order_over_list( data ){     console.log( data )
+
+                var member_order_over_box_temp=[]
+
+                for( let i=0 ; i < data.length ; i++ ){
+
+                    member_order_over_box_temp.push( [] )
+                    member_order_over_box_temp[i].push( data[i].order_id, moment( data[i].update_date ).format('YYYY-MM-DD'), data[i].product_name, data[i].order_price, data[i].order_quantity )
+
+                }
+
+                this.member_order_over_box = member_order_over_box_temp
+                console.log(this.member_order_over_box)
+                this.see_status = 'ready'
+    
+            },
+
+
+
+
 
 
 
 
 
             change_page( path ){  // 頁面跳轉
+
+                if( path == "over" ){  /*this.recovery_main_page()*/  }
                 
-                if( path == "logout" ){ 
+                else if( path == "logout" ){ 
 
                     localStorage.clear()
                     sessionStorage.clear()
@@ -206,12 +213,9 @@
                     this.vuex_set_token( '' )
                     this.$router.push( { name: "login" })
                 }
-                
-                else if( path != "member" ){  this.test_token( "change_page", path )  }
 
+                else{  this.test_token( "change_page", path )  }
             },
-
-
 
 
 
@@ -233,6 +237,18 @@
 
     #home_box{  width: 98vw; height: 100vh; padding: 10px 0px 0px 20px;  } 
 
-
+    #product_table{ 
+        
+        border: 1px solid #000; 
+        font-family: 微軟正黑體; 
+        font-size: 16px; 
+        
+        text-align: center;
+        border-collapse: collapse;
+        
+        width: 100%;
+        height: 40%;
+        margin: 10px 0px;
+    } 
 
 </style>

@@ -15,7 +15,6 @@ token_test = new Token_test();
 
 router.post( '/login' , login.member_login );
 router.post( '/login/new_page' , login.find_vuex_or_id );
-
 router.post( '/register' , register.member_register );
 router.post( '/edit' , edit.member_edit );
 router.post( '/token' , token_test.token_test );

@@ -27,6 +27,9 @@
         <br>
         
     
+        <button v-on:click="bt_register()" > 註冊 </button>
+
+
     </div>
     
 
@@ -64,7 +67,7 @@
                 
                 .then( function ( res ) {  
                     
-                    if( res.data.status == "登入失敗" ){  alert( res.data )  }
+                    if( res.data.status == "登入失敗" ){  alert( res.data.err )  }
                     
                     else{ 
                         
@@ -103,6 +106,9 @@
             ...mapActions( {  x_set_email: 'set_email'  } ),
             ...mapActions( {  x_set_token: 'set_token'  } ),
         
+
+            bt_register(){  this.$router.push( { name: "register" })  }
+
 
 
         },

@@ -29,10 +29,3 @@ module.exports = class token_test_models {
         })
     }
 }
-
-        /*
-        verification_token( obj.token )
-                
-            .then( function( result ){  res.send( result )  })
-            .catch( function( err ){  res.send( err )  })
-        */

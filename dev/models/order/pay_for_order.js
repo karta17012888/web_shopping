@@ -29,8 +29,6 @@ module.exports = class order_models {
     
                 .then( function( order_inf ){  
                     
-                    console.log( order_inf )
-                    
                     const mailOptions = {
                         
                         from: `"企鵝購物網" <${config.sender_mail.user}>`, 
@@ -39,23 +37,17 @@ module.exports = class order_models {
                         html: `<p>Hi, ${order_inf.user_name} </p>` + `<br>` + `<br>` + `<span>感謝您訂購<b>企鵝購物網</b>的商品，歡迎下次再來！</span>`
                     }
 
-                    
-                    
                     connect_mail.sendMail(  mailOptions, function( err, info ){
 
-                        if (err) {  return console.log(err)  }
-                        
-                        console.log('Message %s sent: %s', info.messageId, info.response);
-                    
+                        if (err) {  return console.log(err)  }  //console.log('Message %s sent: %s', info.messageId, info.response);
                     })
-                    console.log( "send_email_message_3" )
+
                     var result = {
 
                         status: '訂單編號：' + order_inf.order_id + ' 付款已完成，謝謝您使用該服務！詳細的訂單資訊已寄送至 ' + order_inf.user_email
                     }
 
                     res.send( result )
-                    
                 })
                 
                 .catch( function( err ){  res.send( err )  }) 
